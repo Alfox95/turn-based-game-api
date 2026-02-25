@@ -1,40 +1,16 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from pydantic import BaseModel, field_validator
 
 from app.database import  get_db
 from app.auth import get_current_user, requiere_admin
 from app.models import Usuario
 from app.security import hash_password
+from app.schemas.schemas import UsuarioCreate, UsuarioOut, UsuarioUpdate
 
 
-router = APIRouter()
-
-class UsuarioCreate(BaseModel):
-    username: str
-    mail: str
-    password: str
-    nombre: str
-    edad: int
-    es_admin: bool = False
+router = APIRouter(prefix="/usuarios", tags=["Usuarios"])
 
 
-    @field_validator("password")
-    def validar_password(cls, value):
-        if len(value.encode("utf-8")) > 72:
-            raise ValueError("La contraseña es demasiado larga")
-        if len(value) < 6:
-            raise ValueError("La contraseña debe tener al menos 6 caracteres")
-        return value
-
-class UsuarioOut(BaseModel):
-    id: int
-    username: str
-    mail: str
-    password: str
-    nombre: str
-    edad: int
-    es_admin: bool
 
 @router.post("/usuarios")
 def crear_usuario(usuario: UsuarioCreate, db: Session = Depends(get_db)):
@@ -83,10 +59,6 @@ def listar_usuarios(
         raise  HTTPException(status_code=403, detail="No tienes permisos de admin")
     return db.query(Usuario).all()
 
-class UsuarioUpdate(BaseModel):
-    nombre: str
-    edad: int
-    es_admin: bool
 
 @router.get("/usuarios/me")
 def leer_mi_usuario(current_user: Usuario = Depends(get_current_user)):

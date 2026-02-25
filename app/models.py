@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy.orm import relationship
 from app.database import Base
 
 
@@ -12,3 +13,5 @@ class Usuario(Base):
     password = Column(String, nullable=False)
     edad = Column(Integer, nullable=False)
     es_admin = Column(Boolean, default=False)
+    personajes = relationship("Personaje", back_populates="usuario")
+
