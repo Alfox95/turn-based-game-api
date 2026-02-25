@@ -14,23 +14,33 @@ def listar_personajes():
 
 # Crear personaje
 @router.post("/personajes")
-def crear_personaje(personaje: PersonajeCreate, 
+def crear_personaje(datos: PersonajeCreate, 
                     db: Session = Depends(get_db),
-                    current_user: Usuario = Depends(get_current_user)
+                    usuario: Usuario = Depends(get_current_user)
 ):
-    raza = db.query(Raza).get(personaje.raza_id)
-    if not raza:
-        raise HTTPException(404, "Raza no existe")
-    clase =  db.query(Clase).get(personaje.clase_id)
-    if not clase:
-        raise HTTPException(404, "Clase no existe")
+    raza = db.query(Raza).filter(Raza.id == datos.raza_id).first()
+    clase = db.query(Clase).filter(Clase.id == datos.clase_id).first()
     
+    if not raza or not clase:
+        raise HTTPException(status_code=400, detail="Raza o clase inválida")
+    
+    fuerza = 5 + raza.fuerza_mod
+    agilidad = 5 + raza.agilidad_mod
+    inteligencia = 5 + raza.inteligencia_mod
+    constitucion = 5 + raza.constitucion_mod
+    vida_actual = clase.vida_base
 
     nuevo = Personaje(
-        nombre=personaje.nombre,
-        raza_id=personaje.raza_id,
-        clase_id=personaje.clase_id,
-        usuario_id=current_user.id
+        nombre=datos.nombre,
+        usuario_id=usuario.id,
+        raza_id=raza.id,
+        clase_id=clase.id,
+        fuerza=fuerza,
+        agilidad=agilidad,
+        inteligencia=inteligencia,
+        constitucion=constitucion,
+        vida_actual=vida_actual,
+        energia = clase.energia_base
     )
 
     db.add(nuevo)

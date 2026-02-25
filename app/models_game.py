@@ -1,8 +1,8 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
 
-
 from app.database import Base
+from app.models import Usuario
 
 class Raza(Base):
     __tablename__ = "razas"
@@ -17,6 +17,8 @@ class Raza(Base):
 
     habilidad_especial = Column(String, nullable=True)
 
+    personajes = relationship("Personaje", back_populates="raza")
+
 class Clase(Base):
     __tablename__ = "clases"
 
@@ -29,11 +31,13 @@ class Clase(Base):
     magico_base = Column(Integer)
     precision_base = Column(Integer)
     evasion_base = Column(Integer)
+    energia_base = Column(Integer)
+    habilidades = Column(String, nullable=True)
+
+    personajes = relationship("Personaje", back_populates="clase")
 
 class Personaje(Base):
     __tablename__ = "personajes"
-
-    usuario = relationship("Usuario", back_populates="personajes")
 
     id = Column(Integer, primary_key=True, index=True)
 
@@ -50,10 +54,14 @@ class Personaje(Base):
     agilidad = Column(Integer, default=10)
     inteligencia = Column(Integer, default=10)
     constitucion = Column(Integer, default=10)
-    #energia = Column(Integer, default= 10)
+    energia = Column(Integer, default= 10)
 
     vida_actual = Column(Integer, default= 20)
     mana_actual = Column(Integer, default=20)
+
+    usuario = relationship("Usuario", back_populates="personajes")
+    raza = relationship("Raza", back_populates="personajes")
+    clase = relationship("Clase", back_populates="personajes")
 
 class Habilidad(Base):
     __tablename__ = "habilidades"
