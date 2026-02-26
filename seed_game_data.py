@@ -40,7 +40,7 @@ def seed_razas():
              agilidad_mod=1, 
              inteligencia_mod=4,
              constitucion_mod=0,
-             habilidad_especial="Concentración"),
+             habilidad_especial="Concentración")
     ]
 
     for raza in razas:
@@ -52,23 +52,89 @@ def seed_razas():
 
 def seed_clases():
     clases = [
-        Clase(nombre="Guerrero", vida_base=120, mana_base=20,
-              ataque_base=15, precision_base=70, evasion_base=5),
+        Clase(
+            nombre="Guerrero",
+            multiplicador_daño_fisico=1.2,
+            multiplicador_daño_magico=0.55,
+            bonus_precision=0.85,
+            bonus_evasion=0.05,
+            ataque_por_nivel=3,
+            magia_por_nivel=0.5,
+            defensa_por_nivel=1,
+            energia_por_nivel=10,
+            vida_por_constitucion=0.7,
+            mana_por_inteligencia=0.5
+        ),
 
-        Clase(nombre="Mago", vida_base=70, mana_base=120,
-              ataque_base=20, precision_base=65, evasion_base=10),
+        Clase(
+            nombre="Mago",
+            multiplicador_daño_fisico=0.85,
+            multiplicador_daño_magico=1.3,
+            bonus_precision=0.7,
+            bonus_evasion=0.05,
+            ataque_por_nivel=0.75,
+            magia_por_nivel=3,
+            defensa_por_nivel=1,
+            energia_por_nivel=10,
+            vida_por_constitucion=0.4,
+            mana_por_inteligencia=2.5
+        ),
 
-        Clase(nombre="Asesino", vida_base=80, mana_base=40,
-              ataque_base=18, precision_base=80, evasion_base=20),
+        Clase(
+            nombre="Asesino",
+            multiplicador_daño_fisico=1.3,
+            multiplicador_daño_magico=0.95,
+            bonus_precision=0.85,
+            bonus_evasion=0.2,
+            ataque_por_nivel=2.5,
+            magia_por_nivel=1.5,
+            defensa_por_nivel=1,
+            energia_por_nivel=10,
+            vida_por_constitucion=0.35,
+            mana_por_inteligencia=1.5
+        ),
 
-        Clase(nombre="Cazador", vida_base=90, mana_base=50,
-              ataque_base=16, precision_base=85, evasion_base=15),
+        Clase(
+            nombre="Cazador",
+            multiplicador_daño_fisico=1.15,
+            multiplicador_daño_magico=0.9,
+            bonus_precision=0.8,
+            bonus_evasion=0.1,
+            ataque_por_nivel=2,
+            magia_por_nivel=1,
+            defensa_por_nivel=1,
+            energia_por_nivel=10,
+            vida_por_constitucion=0.5,
+            mana_por_inteligencia=1
+        ),
 
-        Clase(nombre="Druida", vida_base=95, mana_base=90,
-              ataque_base=14, precision_base=75, evasion_base=10),
+        Clase(
+            nombre="Druida",
+            multiplicador_daño_fisico=0.9,
+            multiplicador_daño_magico=1.2,
+            bonus_precision=0.8,
+            bonus_evasion=0.1,
+            ataque_por_nivel=1,
+            magia_por_nivel=2,
+            defensa_por_nivel=1,
+            energia_por_nivel=10,
+            vida_por_constitucion=0.4,
+            mana_por_inteligencia=2
+        ),
 
-        Clase(nombre="Bandido", vida_base=85, mana_base=30,
-              ataque_base=17, precision_base=78, evasion_base=18),
+        Clase(
+            nombre="Paladin",
+            multiplicador_daño_fisico=1.1,
+            multiplicador_daño_magico=1.0,
+            bonus_precision=0.0,
+            bonus_evasion=0.1,
+            ataque_por_nivel=2,
+            magia_por_nivel=1,
+            defensa_por_nivel=1,
+            energia_por_nivel=10,
+            vida_por_constitucion=0.5,
+            mana_por_inteligencia=1.0
+        )
     ]
 
     for clase in clases:

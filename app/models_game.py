@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Float
 from sqlalchemy.orm import relationship
 
 from app.database import Base
@@ -25,14 +25,24 @@ class Clase(Base):
     id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String, unique=True, nullable=False)
 
-    vida_base = Column(Integer)
-    mana_base = Column(Integer)
-    ataque_base = Column(Integer)
-    magico_base = Column(Integer)
-    precision_base = Column(Integer)
-    evasion_base = Column(Integer)
-    energia_base = Column(Integer)
-    habilidades = Column(String, nullable=True)
+    # 🔹 Multiplicadores constantes
+    multiplicador_daño_fisico = Column(Float, default=1.0)
+    multiplicador_daño_magico = Column(Float, default=1.0)
+
+    bonus_precision = Column(Float, default=0.0)
+    bonus_evasion = Column(Float, default=0.0)
+
+    # 🔹 Progresión por nivel
+    ataque_por_nivel = Column(Float, default=0.0)
+    magia_por_nivel = Column(Float, default=0.0)
+    defensa_por_nivel = Column(Float, default=0.0)
+    energia_por_nivel = Column(Float, default=10.0)
+
+    vida_por_constitucion = Column(Float, default=0.5)
+    mana_por_inteligencia = Column(Float, default=1.0)
+
+    def __repr__(self):
+        return f"<Clase {self.nombre}>"
 
     personajes = relationship("Personaje", back_populates="clase")
 
@@ -56,8 +66,14 @@ class Personaje(Base):
     constitucion = Column(Integer, default=10)
     energia = Column(Integer, default= 10)
 
-    vida_actual = Column(Integer, default= 20)
-    mana_actual = Column(Integer, default=20)
+    vida = Column(Integer, default= 20)
+    mana = Column(Integer, default=20)
+    ataque = Column(Float)
+    magia = Column(Float)
+    defensa = Column(Float)
+    evasion = Column(Float)
+    precision = Column(Float)
+
 
     usuario = relationship("Usuario", back_populates="personajes")
     raza = relationship("Raza", back_populates="personajes")
