@@ -5,7 +5,7 @@ from app.auth import get_current_user
 from app.models import Usuario
 from app.models_game import Personaje, Raza, Clase
 from app.schemas.schemas_pj import PersonajeCreate
-from app.game_logic import calcular_stats
+from app.game_logic.game_logic import calcular_stats
 
 
 def crear_personaje(db: Session, 
@@ -32,13 +32,13 @@ def crear_personaje(db: Session,
 
     stats = calcular_stats(personaje, raza, clase)
 
-    personaje.vida = stats["vida"]
-    personaje.mana = stats["mana"]
+    personaje.vida_max = stats["vida"]
+    personaje.mana_max = stats["mana"]
     personaje.fuerza = stats["fuerza"]
     personaje.agilidad = stats["agilidad"]
     personaje.inteligencia = stats["inteligencia"]
     personaje.constitucion = stats["constitucion"]
-    personaje.energia = stats["energia"]
+    personaje.energia_max = stats["energia"]
     personaje.ataque = stats["ataque"]
     personaje.magia = stats["magia"]
     personaje.defensa = stats["defensa"]

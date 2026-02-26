@@ -5,7 +5,7 @@ from app.schemas.schemas_pj import PersonajeCreate, PersonajeOut
 from app.models_game import Personaje, Raza, Clase
 from app.models import Usuario
 from app.auth import get_current_user
-from app.game_logic import calcular_stats
+from app.game_logic.game_logic import calcular_stats
 from app.services.personaje_service import crear_personaje
 
 router = APIRouter(prefix="/personajes", tags=["Personajes"])

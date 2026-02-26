@@ -64,10 +64,18 @@ class Personaje(Base):
     agilidad = Column(Integer, default=10)
     inteligencia = Column(Integer, default=10)
     constitucion = Column(Integer, default=10)
-    energia = Column(Integer, default= 10)
 
-    vida = Column(Integer, default= 20)
-    mana = Column(Integer, default=20)
+    vivo = Column(Boolean, default=True)
+
+    vida_max = Column(Integer)
+    vida_actual = Column(Integer)
+
+    mana_max = Column(Integer)
+    mana_actual = Column(Integer)
+
+    energia_max = Column(Integer)
+    energia_actual = Column(Integer)
+
     ataque = Column(Float)
     magia = Column(Float)
     defensa = Column(Float)
